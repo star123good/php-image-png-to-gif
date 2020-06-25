@@ -1,8 +1,9 @@
 frame,file_name,duration_seconds,transition_effect
 1,image_file_1.png,0.5,none
 2,image_file_2.png,2.5,fade_ltr
-3,image_file_3.png,0.5,none
-4,image_file_4.png,1.0,none
-5,image_file_5.png,0.5,none
-6,image_file_6.png,0.2,none
+3,image_file_3.png,1.0,none
+4,image_file_4.png,4.0,fade_in
+5,image_file_5.png,5.0,fade_in
+6,image_file_6.png,1.2,none
 7,image_file_7.png,5.0,fade_in
+8,image_file_8.png,1.5,none

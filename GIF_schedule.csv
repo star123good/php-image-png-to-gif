@@ -1,0 +1,21 @@
+GIF FRAME,Image (file name),Duration (seconds),Transition effect
+1,image_file_1.png,3,
+2,image_file_2.png,3,
+3,image_file_3.png,3,Fade LTR
+4,image_file_4.png,1,
+5,image_file_5.png,3,
+6,image_file_6.png,1,
+7,image_file_7.png,3,Fade in
+8,image_file_8.png,3,
+9,image_file_9.png,1,
+10,image_file_10.png,2,
+11,image_file_11.png,3,
+12,image_file_12.png,1,
+13,image_file_13.png,2,
+14,image_file_14.png,1,
+15,image_file_15.png,1,
+16,image_file_16.png,1,
+17,image_file_17.png,2,
+18,image_file_18.png,3,
+19,image_file_19.png,3,
+20,image_file_20.png,3,

@@ -81,7 +81,8 @@ class GIF_creator(Frame):
             return data
 
     def get_image_size(self, image_file_path):
-        command = bin_dir + "identify -ping -format '%w %h' " + image_file_path
+        # command = bin_dir + "identify -ping -format '%w %h' " + image_file_path
+        command = "identify -ping -format '%w %h' " + image_file_path
         exit_code, stdout, stderr = run_command(command)
         if 0 != exit_code:
             messagebox.showerror("Failure", "Couldn't get the first frame width and height.\n\nReason: " + stderr)
@@ -97,7 +98,11 @@ class GIF_creator(Frame):
             # Creating gradient image and using as a transparency mask
             color1_stop = str((-1 * one_tenth_width) + i)
             masked_file = os.path.join(tmp_dir, "fade_in_LTR_" + str(i) + ".png")
-            command = bin_dir + "convert " + fg_file_path + " \( \( -size " + str(width) + "x" + color1_stop + \
+            # command = bin_dir + "convert " + fg_file_path + " \( \( -size " + str(width) + "x" + color1_stop + \
+            #           " canvas:white \) \( -size " + str(width) + "x" + str(one_tenth_width) + " gradient:white-black \) " + \
+            #           "\( -size " + str(width) + "x" + str((width - i)) + " canvas:black \) -append -rotate -90 \) " + \
+            #           "-compose CopyOpacity -composite " + masked_file
+            command = "convert " + fg_file_path + " \( \( -size " + str(width) + "x" + color1_stop + \
                       " canvas:white \) \( -size " + str(width) + "x" + str(one_tenth_width) + " gradient:white-black \) " + \
                       "\( -size " + str(width) + "x" + str((width - i)) + " canvas:black \) -append -rotate -90 \) " + \
                       "-compose CopyOpacity -composite " + masked_file
@@ -108,7 +113,9 @@ class GIF_creator(Frame):
                 exit(1)
         # Aggregating the created frames
         files_list = sorted(glob.glob(os.path.join(tmp_dir, "fade_in*png")))
-        command = bin_dir + "convert -duration 0 -alpha on " + " ".join(files_list) + " " + \
+        # command = bin_dir + "convert -duration 0 -alpha on " + " ".join(files_list) + " " + \
+        #           fg_file_path + " " + os.path.join(tmp_dir, fade_in_LTR_file_path)
+        command = "convert -duration 0 -alpha on " + " ".join(files_list) + " " + \
                   fg_file_path + " " + os.path.join(tmp_dir, fade_in_LTR_file_path)
         exit_code, stdout, stderr = run_command(command)
         if 0 != exit_code:
@@ -138,7 +145,8 @@ class GIF_creator(Frame):
 
         commands = []
         key_frames_indices = []
-        cmd = bin_dir + "convert"
+        # cmd = bin_dir + "convert"
+        cmd = "convert"
         previous_frame_effect = False
         last_key_index = -1
         frame_files_count = len(animation_schedule_list)
@@ -201,7 +209,8 @@ class GIF_creator(Frame):
 
         commands.append(cmd + " " + os.path.join(tmp_dir, "tmp_1.miff"))
         # Setup delay durations for morphing start and end key frames
-        cmd = bin_dir + "convert " + os.path.join(tmp_dir, "tmp_1.miff")
+        # cmd = bin_dir + "convert " + os.path.join(tmp_dir, "tmp_1.miff")
+        cmd = "convert " + os.path.join(tmp_dir, "tmp_1.miff")
         for item in key_frames_indices:
             duration = animation_schedule_list[item[0]][1]
             key = item[1]
@@ -218,9 +227,11 @@ class GIF_creator(Frame):
 
         # Set optimization parameters
         if self.high_res:
-            cmd = bin_dir + "convert -loop 0 " + os.path.join(tmp_dir, "tmp_2.miff")
+            # cmd = bin_dir + "convert -loop 0 " + os.path.join(tmp_dir, "tmp_2.miff")
+            cmd = "convert -loop 0 " + os.path.join(tmp_dir, "tmp_2.miff")
         else:
-            cmd = bin_dir + "convert -loop 0 -layers optimize +dither -depth 64 -alpha on " + os.path.join(tmp_dir, "tmp_2.miff")
+            # cmd = bin_dir + "convert -loop 0 -layers optimize +dither -depth 64 -alpha on " + os.path.join(tmp_dir, "tmp_2.miff")
+            cmd = "convert -loop 0 -layers optimize +dither -depth 64 -alpha on " + os.path.join(tmp_dir, "tmp_2.miff")
         # Apply the optimization and create GIF file
         exit_code, stdout, stderr = run_command(cmd + " " + self.output_file_path)
         self.set_status(status_label, idle = True)
@@ -309,6 +320,7 @@ def run_command(command):
         stdout, stderr = process.communicate()
         exit_code = process.wait()
         output = str(stdout.decode()) + ' ' + str(stderr.decode()) + ' ' + str(exit_code)
+        print("command : ", command)
     except Exception as err:
         print(str(err))
     finally:

@@ -7,7 +7,7 @@
 
     function create_gif($text_file_name) {
         $i = 0;
-        $save_path = realpath("./png");
+        $save_path = realpath(".");
         $GIF = new Imagick();
         $GIF->setFormat("gif");
 
@@ -19,7 +19,7 @@
             }
             $image_data = explode(',', $line);
             $frame = new Imagick();
-            $frame->readImage(realpath("./png/". $image_data[1]));
+            $frame->readImage(realpath("./". $image_data[1]));
             $frame->setImageDelay($image_data[2]);
             $GIF->addImage($frame);
             $GIF->setImageDispose(2);
