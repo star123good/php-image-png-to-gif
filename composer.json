@@ -1,0 +1,5 @@
+{
+    "require": {
+        "ps/image-optimizer": "^2.0"
+    }
+}
