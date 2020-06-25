@@ -37,5 +37,5 @@
         echo $GIF->getImagesBlob();
     }
 
-        create_gif("schedule.txt");
+    create_gif("schedule.txt");
 ?>
