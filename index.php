@@ -1,6 +1,10 @@
 <?php
     require_once 'vendor/autoload.php';
 
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
     function create_gif($text_file_name) {
         $i = 0;
         $save_path = realpath("./png");
@@ -23,11 +27,11 @@
 
         $GIF->writeImages($save_path."/"."animation.gif", true);
 
-        $factory = new \ImageOptimizer\OptimizerFactory();
-        $optimizer = $factory->get('gif');
-        $filepath = $save_path."/"."animation.gif";
+        // $factory = new \ImageOptimizer\OptimizerFactory();
+        // $optimizer = $factory->get('gif');
+        // $filepath = $save_path."/"."animation.gif";
 
-        $optimizer->optimize($filepath);
+        // $optimizer->optimize($filepath);
         
         header("Content-Type: image/gif");
         echo $GIF->getImagesBlob();
